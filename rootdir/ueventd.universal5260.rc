@@ -66,6 +66,8 @@
 /dev/video149             0660   media      media
 /dev/media2               0660   media      media
 
+# touchscreen power control
+/sys/devices/platform/s3c2440-i2c.3/i2c-3/3-004a/input/input*   enabled    0660   system     system
 
 # MobiCore
 /dev/mobicore             0600   drmrpc     drmrpc

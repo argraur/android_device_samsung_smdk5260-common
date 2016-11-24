@@ -3,7 +3,7 @@ import init.wifi.rc
 import init.target.rc
 
 on init
-    export LD_SHIM_LIBS "/system/bin/gpsd|libdmitry.so"
+    export LD_SHIM_LIBS /system/bin/gpsd|libdmitry.so:/system/vendor/lib/libwvm.so|libshims_wvm.so
 
     mkdir /efs 0771 radio system
     mkdir /preload 0771 system system

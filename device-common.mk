@@ -98,6 +98,10 @@ PRODUCT_PACKAGES += \
     libOMX.Exynos.VP8.Decoder \
     libOMX.Exynos.WMV.Decoder
 
+# Shims
+PRODUCT_PACKAGES += \
+    libshims_wvm
+
 # PERMISSONS
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \

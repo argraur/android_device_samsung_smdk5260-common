@@ -7,7 +7,7 @@ Status
 * ROM boot: Yes
 * Audio:  Yes
 * Camera: No
-* GPS: No
+* GPS: Yes
 * Sensors: Yes
 * Lights: Yes
 * RIL: No

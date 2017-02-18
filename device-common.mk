@@ -31,6 +31,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.universal5260
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
+
 # Charger
 PRODUCT_PACKAGES += \
     charger \

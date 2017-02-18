@@ -124,7 +124,7 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    power.manta
+    power.universal5260
 
 # Ramdisk
 PRODUCT_COPY_FILES += \

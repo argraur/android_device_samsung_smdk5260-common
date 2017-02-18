@@ -26,7 +26,7 @@
 #include <stdbool.h>
 //#define LOG_NDEBUG 0
 
-#define LOG_TAG "MantaPowerHAL"
+#define LOG_TAG "exynos5260PowerHAL"
 #include <utils/Log.h>
 
 #include <hardware/hardware.h>
@@ -44,7 +44,7 @@
 #define LOW_POWER_MAX_FREQ "800000"
 #define NORMAL_MAX_FREQ "1700000"
 
-struct manta_power_module {
+struct exynos5260_power_module {
     struct power_module base;
     pthread_mutex_t lock;
     int boostpulse_fd;
@@ -78,7 +78,7 @@ static void sysfs_write(const char *path, char *s)
     close(fd);
 }
 
-static void init_touchscreen_power_path(struct manta_power_module *manta)
+static void init_touchscreen_power_path(struct exynos5260_power_module *exynos5260)
 {
     char buf[80];
     const char dir[] = "/sys/devices/platform/s3c2440-i2c.3/i2c-3/3-004a/input";
@@ -104,7 +104,7 @@ static void init_touchscreen_power_path(struct manta_power_module *manta)
                 return;
             }
             snprintf(path, pathsize, "%s/%s/%s", dir, de->d_name, filename);
-            manta->touchscreen_power_path = path;
+            exynos5260->touchscreen_power_path = path;
             goto done;
         }
     }
@@ -115,7 +115,7 @@ done:
 
 static void power_init(struct power_module *module)
 {
-    struct manta_power_module *manta = (struct manta_power_module *) module;
+    struct exynos5260_power_module *exynos5260 = (struct exynos5260_power_module *) module;
     struct dirent **namelist;
     int n;
 
@@ -138,12 +138,12 @@ static void power_init(struct power_module *module)
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/sync_freq", "1400000");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load", "80");
 
-    init_touchscreen_power_path(manta);
+    init_touchscreen_power_path(exynos5260);
 }
 
 static void power_set_interactive(struct power_module *module, int on)
 {
-    struct manta_power_module *manta = (struct manta_power_module *) module;
+    struct exynos5260_power_module *exynos5260 = (struct exynos5260_power_module *) module;
     char buf[80];
     int ret;
 
@@ -157,31 +157,31 @@ static void power_set_interactive(struct power_module *module, int on)
                 (!on || low_power_mode) ? LOW_POWER_MAX_FREQ : NORMAL_MAX_FREQ);
 
 
-    sysfs_write(manta->touchscreen_power_path, on ? "Y" : "N");
+    sysfs_write(exynos5260->touchscreen_power_path, on ? "Y" : "N");
 
     ALOGV("power_set_interactive: %d done\n", on);
 }
 
-static int boostpulse_open(struct manta_power_module *manta)
+static int boostpulse_open(struct exynos5260_power_module *exynos5260)
 {
     char buf[80];
 
-    pthread_mutex_lock(&manta->lock);
+    pthread_mutex_lock(&exynos5260->lock);
 
-    if (manta->boostpulse_fd < 0) {
-        manta->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
+    if (exynos5260->boostpulse_fd < 0) {
+        exynos5260->boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
 
-        if (manta->boostpulse_fd < 0) {
-            if (!manta->boostpulse_warned) {
+        if (exynos5260->boostpulse_fd < 0) {
+            if (!exynos5260->boostpulse_warned) {
                 strerror_r(errno, buf, sizeof(buf));
                 ALOGE("Error opening %s: %s\n", BOOSTPULSE_PATH, buf);
-                manta->boostpulse_warned = 1;
+                exynos5260->boostpulse_warned = 1;
             }
         }
     }
 
-    pthread_mutex_unlock(&manta->lock);
-    return manta->boostpulse_fd;
+    pthread_mutex_unlock(&exynos5260->lock);
+    return exynos5260->boostpulse_fd;
 }
 
 static struct timespec timespec_diff(struct timespec lhs, struct timespec rhs)
@@ -207,19 +207,19 @@ static int check_boostpulse_on(struct timespec diff)
     return (diff.tv_sec < boost_s);
 }
 
-static void manta_power_hint(struct power_module *module, power_hint_t hint,
+static void exynos5260_power_hint(struct power_module *module, power_hint_t hint,
                              void *data)
 {
-    struct manta_power_module *manta = (struct manta_power_module *) module;
+    struct exynos5260_power_module *exynos5260 = (struct exynos5260_power_module *) module;
     struct timespec now, diff;
     char buf[80];
     int len;
 
     switch (hint) {
      case POWER_HINT_INTERACTION:
-        if (boostpulse_open(manta) >= 0) {
-            pthread_mutex_lock(&manta->lock);
-            len = write(manta->boostpulse_fd, "1", 1);
+        if (boostpulse_open(exynos5260) >= 0) {
+            pthread_mutex_lock(&exynos5260->lock);
+            len = write(exynos5260->boostpulse_fd, "1", 1);
 
             if (len < 0) {
                 strerror_r(errno, buf, sizeof(buf));
@@ -228,13 +228,13 @@ static void manta_power_hint(struct power_module *module, power_hint_t hint,
                 clock_gettime(CLOCK_MONOTONIC, &last_touch_boost);
                 touch_boost = true;
             }
-            pthread_mutex_unlock(&manta->lock);
+            pthread_mutex_unlock(&exynos5260->lock);
         }
 
         break;
 
      case POWER_HINT_VSYNC:
-        pthread_mutex_lock(&manta->lock);
+        pthread_mutex_lock(&exynos5260->lock);
         if (data) {
             if (vsync_count < UINT_MAX)
                 vsync_count++;
@@ -250,17 +250,17 @@ static void manta_power_hint(struct power_module *module, power_hint_t hint,
                 }
             }
         }
-        pthread_mutex_unlock(&manta->lock);
+        pthread_mutex_unlock(&exynos5260->lock);
         break;
 
     case POWER_HINT_LOW_POWER:
-        pthread_mutex_lock(&manta->lock);
+        pthread_mutex_lock(&exynos5260->lock);
         if (data)
             sysfs_write(CPU_MAX_FREQ_PATH, LOW_POWER_MAX_FREQ);
         else
             sysfs_write(CPU_MAX_FREQ_PATH, NORMAL_MAX_FREQ);
         low_power_mode = data;
-        pthread_mutex_unlock(&manta->lock);
+        pthread_mutex_unlock(&exynos5260->lock);
         break;
     default:
             break;
@@ -271,21 +271,21 @@ static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
 
-struct manta_power_module HAL_MODULE_INFO_SYM = {
+struct exynos5260_power_module HAL_MODULE_INFO_SYM = {
     .base = {
         .common = {
             .tag = HARDWARE_MODULE_TAG,
             .module_api_version = POWER_MODULE_API_VERSION_0_2,
             .hal_api_version = HARDWARE_HAL_API_VERSION,
             .id = POWER_HARDWARE_MODULE_ID,
-            .name = "Manta Power HAL",
+            .name = "exynos5260 Power HAL",
             .author = "The Android Open Source Project",
             .methods = &power_module_methods,
         },
 
         .init = power_init,
         .setInteractive = power_set_interactive,
-        .powerHint = manta_power_hint,
+        .powerHint = exynos5260_power_hint,
     },
 
     .lock = PTHREAD_MUTEX_INITIALIZER,

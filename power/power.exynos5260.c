@@ -138,6 +138,23 @@ static void power_init(struct power_module *module)
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/sync_freq", "1400000");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load", "80");
 
+// sys stuff for interactive eagle
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/timer_rate",
+                "20000");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/timer_slack",
+                "20000");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/min_sample_time",
+                "40000");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/hispeed_freq",
+                "1000000");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/go_hispeed_load",
+                "99");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/target_loads", "70 800000:75 1300000:80 1500000:90");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/above_hispeed_delay",
+                "80000");
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive_eagle/boostpulse_duration",
+                "40000");
+
     init_touchscreen_power_path(exynos5260);
 }
 

@@ -100,7 +100,8 @@ PRODUCT_PACKAGES += \
 
 # Shims
 PRODUCT_PACKAGES += \
-    libshims_wvm
+    libshims_wvm \
+    libshims_omx
 
 # PERMISSONS
 PRODUCT_COPY_FILES += \

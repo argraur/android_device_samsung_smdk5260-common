@@ -2,12 +2,10 @@ import init.universal5260.usb.rc
 import init.wifi.rc
 import init.target.rc
 
-on early-init
-    mkdir /efs 0771 radio system
-
 on init
     export LD_SHIM_LIBS "/system/bin/gpsd|libdmitry.so"
 
+    mkdir /efs 0771 radio system
     mkdir /preload 0771 system system
 
  # Support legacy paths

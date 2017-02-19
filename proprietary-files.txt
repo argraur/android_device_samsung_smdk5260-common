@@ -392,12 +392,11 @@ etc/PARAM.ini
 bin/immvibed
 
 ### Widevine
-lib/liboemcrypto.so
-vendor/lib/mediadrm/libdrmclearkeyplugin.so
-vendor/lib/mediadrm/libwvdrmengine.so
-vendor/lib/libWVStreamControlAPI_L1.so
+vendor/lib/mediadrm/libwvdrmengine.so|6bdcc4d59b07ccbdd7b07a99677406ade3d2e232
 vendor/lib/libwvdrm_L1.so
-vendor/lib/libwvm.so
+vendor/lib/drm/libdrmwvmplugin.so|3bee766222895f524421eb996ca6a08bcf95f19f
+vendor/lib/libwvm.so|59c4c078f4b897ddac8f665309b7a3f25522f207
+vendor/lib/libWVStreamControlAPI_L1.so
 
 # WiFi
 etc/wifi/wpa_supplicant_overlay.conf

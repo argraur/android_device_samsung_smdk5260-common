@@ -19,3 +19,10 @@ int _ZN7android16MediaBufferGroupC1Ej(unsigned int);
 int _ZN7android16MediaBufferGroupC1Ev() {
     return _ZN7android16MediaBufferGroupC1Ej(0);
 }
+
+/* more missing symbols */
+void _ZNK7android11MediaSource11ReadOptions9getSeekToEPxPNS1_8SeekModeE() {}
+void _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferE() {}
+void _ZNK7android11MediaSource11ReadOptions9getLateByEv() {}
+void _ZNK7android11MediaSource11ReadOptions14getNonBlockingEv() {}
+void _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferEb() {}

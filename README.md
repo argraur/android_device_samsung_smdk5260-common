@@ -10,7 +10,7 @@ Status
 * GPS: Yes
 * Sensors: Yes
 * Lights: Yes
-* RIL: No
+* RIL: Yes
 
 ## SoC picture
 ![Exynos5260] (http://www.notebookcheck.net/uploads/tx_nbc2/Exynos_5_Hexa.jpg "Exynos5260")

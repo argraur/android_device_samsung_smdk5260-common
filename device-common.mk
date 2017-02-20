@@ -83,7 +83,8 @@ PRODUCT_PACKAGES += \
     libOMX.Exynos.AAC.Decoder \
     libOMX.Exynos.FLAC.Decoder \
     libOMX.Exynos.MP3.Decoder \
-    libOMX.Exynos.WMA.Encoder
+    libOMX.Exynos.WMA.Encoder \
+    libOMX.Exynos.VP8.Encoder
 
 # Stagefright and device specific modules
 PRODUCT_PACKAGES += \
@@ -93,7 +94,6 @@ PRODUCT_PACKAGES += \
 # Video codecs
 PRODUCT_PACKAGES += \
     libOMX.Exynos.AVC.Decoder \
-    libOMX.Exynos.HEVC.Decoder \
     libOMX.Exynos.MPEG4.Decoder \
     libOMX.Exynos.MPEG4.Encoder \
     libOMX.Exynos.VP8.Decoder \

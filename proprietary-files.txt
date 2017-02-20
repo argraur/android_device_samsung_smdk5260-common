@@ -300,7 +300,6 @@ etc/ymc/param/aec_sidetone_vol_nb.dat
 etc/ymc/param/aec_sidetone_vol_wb.dat
 etc/ymc/param/aec_sp_dac1.dat
 etc/audio_policy.conf
-etc/audio_effects.conf
 etc/mixer_paths.xml
 etc/ysound.xml
 
@@ -343,6 +342,7 @@ usr/idc/Synaptics_RMI4_TouchPad_Sensor.idc
 vendor/firmware/fimc_is_fw2.bin
 # S5P Multi Format Codec
 vendor/firmware/mfc_fw.bin
+etc/media_profiles.xml
 
 # MobiCore
 app/FFFFFFFF000000000000000000000001.drbin

@@ -234,6 +234,10 @@
 
     <!-- Allow screen mirroring/miracast -->
     <bool name="config_enableWifiDisplay">true</bool>
+
     <!-- Our gralloc has support for protected buffers -->
     <bool name="config_wifiDisplaySupportsProtectedBuffers">true</bool>
+
+    <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
+    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 </resources>

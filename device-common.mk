@@ -30,10 +30,6 @@ PRODUCT_PACKAGES += \
     audio.primary.default \
     libaudio-resampler \
 
-# Camera
-PRODUCT_PACKAGES += \
-    camera.universal5260
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
 

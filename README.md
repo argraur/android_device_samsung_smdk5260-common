@@ -6,7 +6,7 @@ Status
 
 * ROM boot: Yes
 * Audio:  Yes
-* Camera: No
+* Camera: No going to fix
 * GPS: Yes
 * Sensors: Yes
 * Lights: Yes

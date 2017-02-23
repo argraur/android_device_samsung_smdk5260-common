@@ -30,9 +30,6 @@ PRODUCT_PACKAGES += \
     audio.primary.default \
     libaudio-resampler \
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/init.exynos.cam.sh:system/etc/init.exynos.cam.sh
-
 # Charger
 PRODUCT_PACKAGES += \
     charger \

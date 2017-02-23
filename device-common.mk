@@ -146,8 +146,7 @@ PRODUCT_PACKAGES += \
 
 # Samsung Packages
 PRODUCT_PACKAGES += \
-    SamsungServiceMode \
-    AdvancedDisplay \
+    SamsungServiceMode
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
